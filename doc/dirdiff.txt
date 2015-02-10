@@ -81,7 +81,7 @@ The following commands can be used inside the diff window:
                         white space, etc.
 
 <q>                     Quit DirDiff
- 
+
 The following comamnds can be used in the Vim diff mode if this is global flag
 is set to 1 (default to 0): >
 
@@ -92,16 +92,18 @@ Note: by default these would not be added, unlike previous version.  It is
 preferable to not change people's mappings by default.
 
                                                 *dirdiff-leader-dg*
-<Leader>dg              Diff get: maps to :diffget<CR>
+<Leader>dg              Diff get: maps to <Plug>DiffGet
 
                                                 *dirdiff-leader-dp*
-<Leader>dp              Diff put: maps to :diffput<CR>
+<Leader>dp              Diff put: maps to <Plug>DiffPut
 
                                                 *dirdiff-leader-dj*
-<Leader>dj              Diff next: (think j for down) 
+<Leader>dj              Diff next: (think j for down)
+                                  maps to <Plug>DiffNext
 
                                                 *dirdiff-leader-dk*
 <Leader>dk              Diff previous: (think k for up)
+                                  maps to <Plug>DiffPrev
 
 
 OPTIONS                                         *dirdiff-options*
@@ -109,6 +111,10 @@ OPTIONS                                         *dirdiff-options*
 You can add the following "let" lines in your .vimrc file in order to customize
 the plugin's behavior.
 
+Specify diff binary to use: >
+
+    let g:DirDiffDiffBinary = 'diff'
+<
 Enable additional mappings in diff mode (set to 1 to enable mappings).
 Default to do nothing: >
 
@@ -117,46 +123,46 @@ Default to do nothing: >
 Sets default exclude pattern: >
 
     let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp"
-
+<
 Sets default ignore pattern: >
 
     let g:DirDiffIgnore = "Id:,Revision:,Date:"
-
+<
 If DirDiffSort is set to 1, sorts the diff lines: >
 
     let g:DirDiffSort = 1
-
+<
 Sets the diff window (bottom window) height (rows): >
 
     let g:DirDiffWindowSize = 14
-
+<
 Ignore case during diff: >
 
     let g:DirDiffIgnoreCase = 0
-
+<
 Dynamically figure out the diff text.  If you are using and i18n version of
 diff, this will try to get the specific diff text during runtime.  It's turned
 off by default.  If you are always targetting a specific version of diff, you
 can turn this off and set the DirDiffText* variables accordingly: >
 
     let g:DirDiffDynamicDiffText = 0
-
+<
 String used for the English equivalent "Files ": >
 
     let g:DirDiffTextFiles = "Files "
-
+<
 String used for the English equivalent " and ": >
 
     let g:DirDiffTextAnd = " and "
-
+<
 String used for the English equivalent " differ"): >
 
     let g:DirDiffTextDiffer = " differ"
-
+<
 String used for the English equivalent "Only in "): >
 
     let g:DirDiffTextOnlyIn = "Only in "
-
+<
 OPTIONS EXAMPLE                                 *dirdiff-options-example*
 
 This is an example for setting DirDiffExcludes and DirDiffIgnore in addition
@@ -168,8 +174,9 @@ For example, you can set these in your .vimrc file: >
     let g:DirDiffExcludes = "CVS,*.class,*.o"
     let g:DirDiffIgnore = "Id:"
     " ignore white space in diff
-    let g:DirDiffAddArgs = "-w" 
+    let g:DirDiffAddArgs = "-w"
     let g:DirDiffEnableMappings = 1
+    let g:DirDiffDiffBinary = 'gdiff'   " Use GNU diff
 <
 
 WARNING                                         *dirdiff-warning*
@@ -236,10 +243,10 @@ HISTORY                                         *dirdiff-history*
        exclude and ignore pattern.
 0.91 - Clean up delete routine.
      - Added interactive mode.
-     - Added multiple entries of exclude and ignore pattern.  
+     - Added multiple entries of exclude and ignore pattern.
      - Custom configuration through global variables.
      - Change exclude and ignore patterns on the fly.
-      
+
 0.9  - Reorganization of the interface.  Much simplier dialog for
        synchronization.  Support for range synchronization option (REALLY
        powerful)
