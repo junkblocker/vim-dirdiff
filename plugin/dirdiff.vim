@@ -96,6 +96,17 @@ if !exists('g:DirDiffDynamicDiffText')
     let g:DirDiffDynamicDiffText = 0
 endif
 
+" Force set the LANG variable before running the C command.  Default to C.
+" Set to "" to not set the variable.
+if !exists("g:DirDiffForceLang")
+    let g:DirDiffForceLang = "C"
+endif
+
+let g:DirDiffLangString = ""
+if (g:DirDiffForceLang == "")
+    let g:DirDiffLangString = 'LANG=' . g:DirDiffForceLang . ' '
+endif
+
 " String used for the English equivalent 'Files '
 if !exists('g:DirDiffTextFiles')
     let g:DirDiffTextFiles = 'Files '

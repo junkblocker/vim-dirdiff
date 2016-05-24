@@ -9,7 +9,7 @@
 function! s:cmd()
     " Allow for using a different command like 'gdiff' etc.
     " Default is 'diff'
-    return '!' . get(g:, 'DirDiffDiffBinary', 'diff')
+    return '!' . g:DirDiffLangString . get(g:, 'DirDiffDiffBinary', 'diff')
 endfunction
 
 " Set some script specific variables:
@@ -376,7 +376,6 @@ endfunction
 function! <SID>ImplHighlightLine(hl)
     let savedLine = line('.')
     exe (b:currentDiff)
-    let line = getline('.')
     setlocal modifiable
     if a:hl
         silent! s/^    /==> /
@@ -770,7 +769,6 @@ function! <SID>GetDiffStrings()
     " We need to pad the backslashes in order to make it match
     let tmp1rx = <SID>EscapeDirForRegex(tmp1)
     let tmp2rx = <SID>EscapeDirForRegex(tmp2)
-    let tmpdiffrx = <SID>EscapeDirForRegex(tmpdiff)
 
     silent exe s:DirDiffMakeDirCmd . s:EscapeFileName(tmp1)
     silent exe s:DirDiffMakeDirCmd . s:EscapeFileName(tmp2)
@@ -782,7 +780,7 @@ function! <SID>GetDiffStrings()
     let regex = printf('\(^.*\)%s\(.*\)test', tmp1rx)
     let [s:DirDiffDiffOnlyLine, s:DirDiffDiffOnlyLineCenter] = matchlist(getline(1), regex)[1:2]
 
-    q
+    bd
 
     " Now let's get the Differ string
     silent exe '!echo testdifferent > ' . s:EscapeFileName(tmp2 . s:sep . 'test')
