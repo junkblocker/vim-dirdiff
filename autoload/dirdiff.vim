@@ -16,6 +16,8 @@ endfunction
 "
 let s:DirDiffFirstDiffLine = 6
 
+let s:DirDiffDefaultExcludes = '*~,.*swp,*.tmp,*.bak,.Spotlight-V100,.LSOverride,.Trashes,._*,Desktop.ini,TAGS,tags,tags.lock,tags.temp,tmp,Thumbs.db,ethumbd.db,.svn,.git,.hg,*.pyc,*.pyo,*.pyd,CVS,*.class,*.exe,*.so,*.dll,*.dylib,*.o,.DS_Store,.DS_Store?,.csearchindex*,.CVS_CO_STATUS'
+
 " -- Variables used in various utilities
 
 let s:DirDiffDiffCmd = s:cmd()
@@ -75,13 +77,12 @@ function! dirdiff#interactive(srcA, srcB)
     if choice == 0 || choice == 4
         return
     elseif choice == 1
-        let g:DirDiffExcludes = '*~,.*swp,*.tmp,*.bak,.Spotlight-V100,.LSOverride,.Trashes,._*,Desktop.ini,TAGS,tags,tags.lock,tags.temp,tmp,Thumbs.db,ethumbd.db,.svn,.git,.hg,*.pyc,*.pyo,*.pyd,CVS,*.class,*.exe,*.so,*.dll,*.dylib,*.o,.DS_Store,.DS_Store?,.csearchindex*,.CVS_CO_STATUS'
+        let g:DirDiffExcludes = s:DirDiffDefaultExcludes
     elseif choice == 2
         let g:DirDiffExcludes = ''
     elseif choice == 3
         call inputsave()
-        let g:DirDiffExcludes = '*~,.*swp,*.tmp,*.bak,.Spotlight-V100,.LSOverride,.Trashes,._*,Desktop.ini,TAGS,tags,tags.lock,tags.temp,tmp,Thumbs.db,ethumbd.db,.svn,.git,.hg,*.pyc,*.pyo,*.pyd,CVS,*.class,*.exe,*.so,*.dll,*.dylib,*.o,.DS_Store,.DS_Store?,.csearchindex*,.CVS_CO_STATUS'
-        let g:DirDiffExcludes = input('Excludes? ', g:DirDiffExcludes)
+        let g:DirDiffExcludes = input('Excludes? ', get(g:, 'DirDiffExcludes', s:DirDiffDefaultExcludes))
         call inputrestore()
     endif
     redraw
@@ -98,7 +99,7 @@ function! dirdiff#interactive(srcA, srcB)
 endfunction
 
 function! dirdiff#my_dirdiff(srcA, srcB)
-    let g:DirDiffExcludes = '*~,.*swp,*.tmp,*.bak,.Spotlight-V100,.LSOverride,.Trashes,._*,Desktop.ini,TAGS,tags,tags.lock,tags.temp,tmp,Thumbs.db,ethumbd.db,.svn,.git,.hg,*.pyc,*.pyo,*.pyd,CVS,*.class,*.exe,*.so,*.dll,*.dylib,*.o,.DS_Store,.DS_Store?,.csearchindex*,.CVS_CO_STATUS'
+    let g:DirDiffExcludes = s:DirDiffDefaultExcludes
     let g:DirDiffIgnore = '.*\\$\\(Author\\|Change\\|Date\\|DateTime\\|File\\|FreeBSD\\|Header\\|Id\\|Revision\\).*\\$.*'
     call dirdiff#diff(a:srcA, a:srcB)
 endfunction
