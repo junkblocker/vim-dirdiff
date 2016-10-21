@@ -16,7 +16,7 @@ endfunction
 "
 let s:DirDiffFirstDiffLine = 6
 
-let s:DirDiffDefaultExcludes = '*~,.*swp,*.tmp,*.bak,.Spotlight-V100,.LSOverride,.Trashes,._*,Desktop.ini,TAGS,tags,tags.lock,tags.temp,tmp,Thumbs.db,ethumbd.db,.svn,.git,.hg,*.pyc,*.pyo,*.pyd,CVS,*.class,*.exe,*.so,*.dll,*.dylib,*.o,.DS_Store,.DS_Store?,.csearchindex*,.CVS_CO_STATUS'
+let s:DirDiffDefaultExcludes = '*~,.*swp,*.tmp,*.bak,.Spotlight-V100,.LSOverride,.Trashes,._*,Desktop.ini,TAGS,tags,tags.lock,tags.temp,tmp,Thumbs.db,ethumbd.db,.svn,.git,.hg,*.pyc,*.pyo,*.pyd,CVS,*.class,*.exe,*.so,*.dll,*.dylib,*.o,.DS_Store,.DS_Store?,.csearchindex*,.CVS_CO_STATUS,cscope.*,pycscope.*'
 
 " -- Variables used in various utilities
 
