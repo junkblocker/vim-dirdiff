@@ -16,7 +16,7 @@ endfunction
 "
 let s:DirDiffFirstDiffLine = 6
 
-let s:DirDiffDefaultExcludes = '*~,.*swp,*.tmp,*.bak,.Spotlight-V100,.LSOverride,.Trashes,._*,Desktop.ini,TAGS,tags,tags.lock,tags.temp,tmp,Thumbs.db,ethumbd.db,.svn,.git,.hg,*.pyc,*.pyo,*.pyd,CVS,*.class,*.exe,*.so,*.dll,*.dylib,*.o,.DS_Store,.DS_Store?,.csearchindex*,.CVS_CO_STATUS,cscope.*,pycscope.*'
+let s:DirDiffDefaultExcludes = '*~,#*,*#,*.#*,.*swp,*.tmp,*.bak,.Spotlight-V100,.LSOverride,.Trashes,._*,Desktop.ini,TAGS,tags,tags.lock,tags.temp,tmp,Thumbs.db,ethumbd.db,.svn,.git,.hg,*.pyc,*.pyo,*.pyd,CVS,*.class,*.exe,*.so,*.dll,*.dylib,*.o,.DS_Store,.DS_Store?,.csearchindex*,.CVS_CO_STATUS,cscope.*,pycscope.*'
 
 " -- Variables used in various utilities
 
@@ -181,7 +181,7 @@ function! <SID>CreateDiffCmdArgs()
         let diffcmdarg .= ' '.g:DirDiffAddArgs.' '
     endif
     if (g:DirDiffExcludes != '')
-        let diffcmdarg .= ' -x"'.substitute(g:DirDiffExcludes, ',', '" -x"', 'g').'"'
+        let diffcmdarg .= ' -x"'.substitute(substitute(g:DirDiffExcludes, ',', '" -x"', 'g').'"', '#', '\\#', 'g')
     endif
     if (g:DirDiffIgnore != '')
         let diffcmdarg .= ' -I"'.substitute(g:DirDiffIgnore, ',', '" -I"', 'g').'"'

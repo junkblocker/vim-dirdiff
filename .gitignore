@@ -1,0 +1,71 @@
+# Don't sort this section and definitely never ignoring case
+tags
+tags.lock
+tags.temp
+TAGS
+
+# *scope
+cscope.*
+pycscope.*
+.starscope.db
+
+# sort u is ok here but not sort iu
+*.bak
+*.log
+*.py[co]
+*.tmp
+*/.cvsignore
+*/.hg/*
+*/CVS/*
+*\#
+*~
+.\#*
+._*
+.csearchindex*
+.cvsignore
+.hgignore
+.netrwhist
+.nfs*
+.svn/
+/.hg/*
+/CVS/*
+P4ENV
+ehthumbs.db
+tmp/
+build/
+nohup.out
+
+# Vim
+*.sw[a-z]
+
+# Windows
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN
+
+# OSX
+.DS_Store
+.DS_Store?
+Icon?
+.AppleDouble
+._*
+.DocumentRevisions-V100
+.Spotlight-V100
+.Trashes
+.LSOverride
+
+# mypy caches
+.mypy_cache/
+.cache/
+
+# QNAP
+.@__thumb
+.AppleDB
+
+# Synology
+@eaDir
+
+# Unignore some files
+!tags/
+!TAGS/
+!.gitignore
