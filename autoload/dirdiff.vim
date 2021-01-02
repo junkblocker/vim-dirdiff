@@ -198,7 +198,7 @@ function! <SID>PutHeaderToDiffBuffer(srcA, srcB, diffcmdarg)
     else
         call append(2, "Usage:   <Enter>/'o'=open,'s'=sync,'q'=quit")
     endif
-    call append(3, "Options: 'u'=update,'x'=set excludes,'i'=set ignore,'a'=set args" )
+    call append(3, "Options: 'u'=update,'x'=set excludes,'i'=set ignore,'a'=set args, 'h'=hex mode, 'w'=wrap mode")
     call append(4, 'Diff Args:' . a:diffcmdarg)
     call append(5, '')
 endfunction
@@ -221,6 +221,8 @@ function! <SID>SetupLocalKeyBindings()
     nnoremap <buffer> x :call <SID>ChangeExcludes()<CR>
     nnoremap <buffer> a :call <SID>ChangeArguments()<CR>
     nnoremap <buffer> i :call <SID>ChangeIgnore()<CR>
+    nnoremap <buffer> h :call dirdiff#hexmode()<CR>
+    nnoremap <buffer> w :call dirdiff#wrapmode()<CR>
     nnoremap <buffer> q :call dirdiff#quit()<CR>
 
     nnoremap <buffer> o             :call dirdiff#open()<CR>
@@ -281,6 +283,62 @@ function! <SID>CloseDiffWindows()
             bd!
         endif
     endif
+endfunction
+
+" Toggle hexmode from http://vim.wikia.com/wiki/Hex
+function <SID>ToggleHex()
+    " hex mode should be considered a read-only operation
+    " save values for modified and read-only for restoration later,
+    " and clear the read-only flag for now
+    let l:modified=&mod
+    let l:oldreadonly=&readonly
+    let &readonly=0
+    let l:oldmodifiable=&modifiable
+    let &modifiable=1
+    if !exists("b:editHex") || !b:editHex
+        " save old options
+        let b:oldft=&ft
+        let b:oldbin=&bin
+        " set new options
+        setlocal binary " make sure it overrides any textwidth, etc.
+        let &ft="xxd"
+        " set status
+        let b:editHex=1
+        " switch to hex editor
+        silent %!xxd
+    else
+        " restore old options
+        let &ft=b:oldft
+        if !b:oldbin
+            setlocal nobinary
+        endif
+        " set status
+        let b:editHex=0
+        " return to normal editing
+        silent %!xxd -r
+    endif
+    " restore values for modified and read only state
+    let &mod=l:modified
+    let &readonly=l:oldreadonly
+    let &modifiable=l:oldmodifiable
+endfunction
+
+function! dirdiff#hexmode()
+    wincmd k
+    call <SID>ToggleHex()
+    wincmd l
+    call <SID>ToggleHex()
+    " Go back to the diff window
+    wincmd j
+endfunction
+
+function! dirdiff#wrapmode()
+    wincmd k
+    setlocal wrap!
+    wincmd l
+    setlocal wrap!
+    " Go back to the diff window
+    wincmd j
 endfunction
 
 function! <SID>EscapeFileName(path)
