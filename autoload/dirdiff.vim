@@ -173,6 +173,10 @@ endfunction
 function! <SID>CreateDiffCmdArgs()
     let diffcmdarg = s:DirDiffDiffFlags
 
+    if (g:DirDiffIgnoreFileNameCase)
+        let diffcmdarg .= " --ignore-file-name-case"
+    endif
+
     " If variable is set, we ignore the case
     if (g:DirDiffIgnoreCase)
         let diffcmdarg .= ' -i'
@@ -576,9 +580,12 @@ function! <SID>GetFileNameFromLine(AB, line)
     if <SID>IsOnly(a:line)
         let fileToProcess = <SID>ParseOnlyFile(a:line)
     elseif <SID>IsDiffer(a:line)
-        let regex = printf('^.*%s\[A\]\(.*\)%s\[B\].*%s.*$', s:DirDiffDifferLine, s:DirDiffDifferAndLine, s:DirDiffDifferEndLine)
-        let fileToProcess = substitute(a:line, regex, '\1', '')
-    else
+        let regex = printf('^.*%s\[A\]\(.*\)%s\[B\]\(.*\)%s.*$', s:DirDiffDifferLine, s:DirDiffDifferAndLine, s:DirDiffDifferEndLine)
+        if a:AB == 'A'
+            let fileToProcess = substitute(a:line, regex, '\1', '')
+        elseif a:AB == 'B'
+            let fileToProcess = substitute(a:line, regex, '\2', '')
+        endif
     endif
 
     return (a:AB == 'A' ? b:DirDiffDirA : b:DirDiffDirB) . fileToProcess

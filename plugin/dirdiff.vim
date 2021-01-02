@@ -96,6 +96,10 @@ if !exists('g:DirDiffDynamicDiffText')
     let g:DirDiffDynamicDiffText = 0
 endif
 
+if !exists('g:DirDiffIgnoreFileNameCase')
+    let g:DirDiffIgnoreFileNameCase = 0
+endif
+
 " Force set the LANG variable before running the C command.  Default to C.
 " Set to "" to not set the variable.
 if !exists("g:DirDiffForceLang")
